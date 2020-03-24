@@ -22,7 +22,8 @@ import org.w3c.dom.Node;
 
 public class App {
   public static void main(String[] args) throws Exception {
-    try (FileInputStream fis = new FileInputStream(new File("./docx/Document.docx"))) {
+    try (FileInputStream fis = new FileInputStream(new File("./docx/Document.docx"));
+        FileOutputStream fos = new FileOutputStream(new File("./docx/Result.docx"));) {
       XWPFDocument wordDoc = new XWPFDocument(fis);
       HashMap<String, String> replaceList = new HashMap<String, String>();
       replaceList.put("abnahmestelle", "Meine Abnahmestelle");
@@ -31,7 +32,7 @@ public class App {
 
       replaceBookmarkContent(wordDoc, replaceList);
 
-      wordDoc.write(new FileOutputStream(new File("./docx/Result.docx")));
+      wordDoc.write(fos);
     } catch (Exception e) {
       e.printStackTrace();
     }
